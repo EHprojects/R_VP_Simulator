@@ -54,18 +54,38 @@ eval_simple <- function(hand) {
   
 }
 
+#### Evaluate for a Four of a Kind - Deprecated####
+# four_kind <- function(hand) {
+#   
+#   ranks <- get_ranks(hand)
+#   
+#   match_pos1 <- 0
+#   match_pos2 <- 0
+#   
+#   match_pos1 <- sum(ranks == ranks[1])
+#   match_pos2 <- sum(ranks == ranks[2])
+#   
+#   if(match_pos1 == 4 | match_pos2 == 4) {
+#     return(TRUE)
+#   } else {
+#     return(FALSE)
+#   }
+#   
+# }
+
 #### Evaluate for a Four of a Kind ####
 four_kind <- function(hand) {
   
   ranks <- get_ranks(hand)
+  rank_match <- rep(NA, length(ranks))
   
-  match_pos1 <- 0
-  match_pos2 <- 0
+  for (i in 1:length(ranks)) {
+    
+    rank_match[i] <- sum(ranks == ranks[i])
+    
+  }
   
-  match_pos1 <- sum(ranks == ranks[1])
-  match_pos2 <- sum(ranks == ranks[2])
-  
-  if(match_pos1 == 4 | match_pos2 == 4) {
+  if(4 %in% rank_match) {
     return(TRUE)
   } else {
     return(FALSE)

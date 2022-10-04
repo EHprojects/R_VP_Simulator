@@ -1,6 +1,6 @@
-test_hand <- c("9D", "KD", "KS", "KH", "KC")
+test_hand <- c("9D", "9D", "KS", "KH", "KC")
 
-three_kind <- function(hand) {
+four_kind <- function(hand) {
   
   ranks <- get_ranks(hand)
   rank_match <- rep(NA, length(ranks))
@@ -11,7 +11,7 @@ three_kind <- function(hand) {
     
   }
   
-  if(3 %in% rank_match) {
+  if(4 %in% rank_match) {
     return(TRUE)
   } else {
     return(FALSE)
@@ -19,7 +19,7 @@ three_kind <- function(hand) {
   
 }
 
-three_kind(test_hand)
+four_kind(test_hand)
 
 test_ranks <- get_ranks(test_hand)
 
