@@ -1,16 +1,39 @@
-test_hand <- c("KD", "9D", "JS", "10H", "QC")
+test_hand <- c("9D", "KD", "KS", "KH", "KC")
 
-four_kind <- function(hand) {
+three_kind <- function(hand) {
   
   ranks <- get_ranks(hand)
-  print(ranks)
+  rank_match <- rep(NA, length(ranks))
   
-  if(length(unique(ranks) == 2)) {
+  for (i in 1:length(ranks)) {
+    
+    rank_match[i] <- sum(ranks == ranks[i])
+    
+  }
+  
+  if(3 %in% rank_match) {
     return(TRUE)
   } else {
     return(FALSE)
   }
+  
 }
 
-four_kind(test_hand)
+three_kind(test_hand)
 
+test_ranks <- get_ranks(test_hand)
+
+
+for (i in 1:2) {
+  
+  print("test")
+  
+}
+
+sum(test_ranks == test_ranks[2])
+
+anyDuplicated(test_ranks)
+duplicated(test_ranks)
+
+tst2 <- rep(NA, 5)
+tst2[1] <- 1
