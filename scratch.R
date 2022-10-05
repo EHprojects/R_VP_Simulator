@@ -1,39 +1,19 @@
-test_hand <- c("9D", "9D", "KS", "KH", "KC")
+test_hand <- c("10D", "JD", "KD", "QD", "AS")
 
-four_kind <- function(hand) {
+royal <- function(hand) {
   
-  ranks <- get_ranks(hand)
-  rank_match <- rep(NA, length(ranks))
+  rank_vals <- as.numeric(assign_rank_vals(hand))
   
-  for (i in 1:length(ranks)) {
-    
-    rank_match[i] <- sum(ranks == ranks[i])
-    
-  }
+  royal_str <- setequal(c(10, 11, 12, 13, 14), rank_vals) # test for "royal straight"
   
-  if(4 %in% rank_match) {
+  if(royal_str & flush_hand(hand)) {
     return(TRUE)
   } else {
     return(FALSE)
   }
   
+  
+
 }
 
-four_kind(test_hand)
-
-test_ranks <- get_ranks(test_hand)
-
-
-for (i in 1:2) {
-  
-  print("test")
-  
-}
-
-sum(test_ranks == test_ranks[2])
-
-anyDuplicated(test_ranks)
-duplicated(test_ranks)
-
-tst2 <- rep(NA, 5)
-tst2[1] <- 1
+royal(test_hand)

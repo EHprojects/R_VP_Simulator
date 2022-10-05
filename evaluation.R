@@ -256,3 +256,34 @@ three_kind <- function(hand) {
   }
   
 }
+
+#### Evaluate for a Flush ####
+flush_hand <- function(hand) {
+  
+  suits <- get_suits(hand)
+  
+  if(length(unique(suits)) == 1)  {
+    return(TRUE)
+  } else {
+    return(FALSE)
+  }
+  
+}
+
+#### Evaluate for a Royal Flush ####
+royal <- function(hand) {
+  
+  rank_vals <- as.numeric(assign_rank_vals(hand))
+  
+  royal_str <- setequal(c(10, 11, 12, 13, 14), rank_vals) # test for "royal straight"
+  
+  if(royal_str & flush_hand(hand)) {
+    return(TRUE)
+  } else {
+    return(FALSE)
+  }
+  
+  
+  
+}
+
