@@ -1,3 +1,8 @@
+# To Do:  Change length assignment at beginning of functions (i.e. rep)
+#         Modify appropriate functions to use match_ranks func?
+
+
+#### Return the card ranks ####
 get_ranks <- function(hand) {
   
   ranks <- NULL
@@ -10,8 +15,8 @@ get_ranks <- function(hand) {
   return(ranks)
 }
 
-get_ranks(test_hand)
 
+#### Return the card suits ####
 get_suits <- function(hand) {
   
   suits <- NULL
@@ -22,6 +27,8 @@ get_suits <- function(hand) {
   return(suits)
 }
 
+
+#### Assign a numeric value to each rank and return them ####
 assign_rank_vals <- function(hand) {
   
   ranks <- get_ranks(hand)
@@ -47,14 +54,24 @@ assign_rank_vals <- function(hand) {
   
 }
 
-assign_rank_vals(test_hand)
 
-
-eval_simple <- function(hand) {
+#### Evaluate for a Royal Flush ####
+royal <- function(hand) {
+  
+  rank_vals <- as.numeric(assign_rank_vals(hand))
+  
+  royal_str <- setequal(c(10, 11, 12, 13, 14), rank_vals) # test for "royal straight"
+  
+  if(royal_str & flush_hand(hand)) {
+    return(TRUE)
+  } else {
+    return(FALSE)
+  }
   
 }
 
-#### Evaluate for a Four of a Kind - Deprecated####
+
+#### Evaluate for a Four of a Kind - Deprecated ####
 # four_kind <- function(hand) {
 #   
 #   ranks <- get_ranks(hand)
@@ -72,6 +89,7 @@ eval_simple <- function(hand) {
 #   }
 #   
 # }
+
 
 #### Evaluate for a Four of a Kind ####
 four_kind <- function(hand) {
@@ -94,6 +112,41 @@ four_kind <- function(hand) {
 }
 
 four_kind(test_hand)
+
+
+#### Evaluate for a Full House ####
+full_house <- function(hand) {
+  
+  ranks <- get_ranks(hand)
+  rank_match <- rep(NA, length(ranks))
+  
+  for (i in 1:length(ranks)) {
+    
+    rank_match[i] <- sum(ranks == ranks[i])
+    
+  }
+  
+  if(sum(rank_match) == 13) {
+    return(TRUE)
+  } else {
+    return(FALSE)
+  }
+  
+}
+
+
+#### Evaluate for a Flush ####
+flush_hand <- function(hand) {
+  
+  suits <- get_suits(hand)
+  
+  if(length(unique(suits)) == 1)  {
+    return(TRUE)
+  } else {
+    return(FALSE)
+  }
+  
+}
 
 
 #### Evaluate for a Straight ####
@@ -214,6 +267,7 @@ straight <- function(hand) {
   
 }
 
+
 #### Evaluate for a Three of a Kind - Deprecated ####
 # three_kind <- function(hand) {
 #   
@@ -257,12 +311,20 @@ three_kind <- function(hand) {
   
 }
 
-#### Evaluate for a Flush ####
-flush_hand <- function(hand) {
+
+#### Evaluate for Two Pair ####
+two_pair <- function(hand) {
   
-  suits <- get_suits(hand)
+  ranks <- get_ranks(hand)
+  rank_match <- rep(NA, length(ranks))
   
-  if(length(unique(suits)) == 1)  {
+  for (i in 1:length(ranks)) {
+    
+    rank_match[i] <- sum(ranks == ranks[i])
+    
+  }
+  
+  if(sum(rank_match) == 9) {
     return(TRUE)
   } else {
     return(FALSE)
@@ -270,20 +332,23 @@ flush_hand <- function(hand) {
   
 }
 
-#### Evaluate for a Royal Flush ####
-royal <- function(hand) {
+
+#### Evaluate for One Pair ####
+one_pair <- function(hand) {
   
-  rank_vals <- as.numeric(assign_rank_vals(hand))
+  ranks <- get_ranks(hand)
+  rank_match <- rep(NA, length(ranks))
   
-  royal_str <- setequal(c(10, 11, 12, 13, 14), rank_vals) # test for "royal straight"
+  for (i in 1:length(ranks)) {
+    
+    rank_match[i] <- sum(ranks == ranks[i])
+    
+  }
   
-  if(royal_str & flush_hand(hand)) {
+  if(sum(rank_match) == 7) {
     return(TRUE)
   } else {
     return(FALSE)
   }
   
-  
-  
 }
-
