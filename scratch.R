@@ -10,32 +10,24 @@
 # Royal Flush > Straight Flush > Four of a Kind > Full House > Flush >
 # Straight > Three of a Kind > Two Pair > Jacks or Better
 
+# Face Card Ranks:
+# J = 11
+# Q = 12
+# K = 13
+# A = 14
 
-test_hand <- c("10D", "AS", "6C", "7H", "7S")
+
+test_hand <- c("AD", "AS", "8C", "7H", "2S")
 
 
-jacks_better <- function(hand) {
-  
-  ranks <- get_ranks(hand)
-  rank_match <- rep(NA, length(ranks))
-  
-  for (i in 1:length(ranks)) {
-    
-    rank_match[i] <- sum(ranks == ranks[i])
-    
-  }
-  
-  if(sum(rank_match) == 7) {
-    return(TRUE)
-  } else {
-    return(FALSE)
-  }
-  
-}
+
 
 jacks_better(test_hand)
 
 
+
+test_vect <- c(NA,NA,TRUE,TRUE,NA)
+any(test_vect, na.rm = TRUE)
 
 
 match_ranks <- function(hand) {

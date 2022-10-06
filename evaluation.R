@@ -1,5 +1,6 @@
 # To Do:  Change length assignment at beginning of functions (i.e. rep)
 #         Modify appropriate functions to use match_ranks func?
+#         Change assign_rank_vals to return numeric vector
 
 
 #### Return the card ranks ####
@@ -346,6 +347,54 @@ one_pair <- function(hand) {
   }
   
   if(sum(rank_match) == 7) {
+    return(TRUE)
+  } else {
+    return(FALSE)
+  }
+  
+}
+
+
+#### Evaluate for Jacks or Better ####
+jacks_better <- function(hand) {
+  
+  is_one_pair <- one_pair(hand) # probably not necessary if run 2nd
+  
+  if(is_one_pair == FALSE) {
+    return(FALSE)
+  }
+  
+  ranks <- get_ranks(hand)
+  rank_vals <- assign_rank_vals(hand)
+  rank_vals <- as.numeric(rank_vals)
+  
+  rank_vals <- sort(rank_vals) # probably unnecessary
+  
+  # print(rank_vals)
+  
+  rank_match <- rep(NA, length(ranks))
+  
+  for (i in 1:length(rank_vals)) {
+    
+    rank_match[i] <- sum(rank_vals == rank_vals[i])
+    
+  }
+  
+  # print(rank_match)
+  
+  high_cards <- rep(NA, length(rank_vals))
+  
+  for (i in 1:length(rank_match)) {
+    
+    if(rank_match[i] == 2 & rank_vals[i] >= 11) {
+      high_cards[i] <- TRUE
+    }
+    
+  }
+  
+  # print(high_cards)
+  
+  if(any(high_cards, na.rm = TRUE)) {
     return(TRUE)
   } else {
     return(FALSE)
