@@ -17,37 +17,28 @@
 # A = 14
 
 
-test_hand <- c("AD", "AS", "8C", "7H", "2S")
+test_hand <- c("10D", "JD", "QD", "KD", "AD")
+
+hand_eval(test_hand)
 
 
-
-
-jacks_better(test_hand)
-
-
-
-test_vect <- c(NA,NA,TRUE,TRUE,NA)
-any(test_vect, na.rm = TRUE)
-
-
-match_ranks <- function(hand) {
+testing_func <- function() {
   
-  ranks <- get_ranks(hand)
-  rank_match <- rep(NA, length(ranks))
-  
-  for (i in 1:length(ranks)) {
-    
-    rank_match[i] <- sum(ranks == ranks[i])
-    
-  }
-  
-  if(sum(rank_match) == 7) {
-    return(TRUE)
-  } else {
-    return(FALSE)
-  }
+  deck <- create_deck()
+  hand <- deal_hand(deck)
+  #print(hand)
+  hand_eval(hand)
   
 }
 
-match_ranks(test_hand)
+system.time(results <- replicate(n = 1000000, testing_func()))
+table(results)
 
+for (i in 1:10) {
+  
+  deck <- create_deck()
+  hand <- deal_hand(deck)
+  print(hand)
+  print(hand_eval(hand))
+  
+}

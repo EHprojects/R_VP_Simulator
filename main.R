@@ -1,4 +1,3 @@
-
 library(tidyverse)
 library(stringr)
 
@@ -24,5 +23,28 @@ deal_hand <- function(deck) {
 
 hand <- deal_hand(deck)
 
-test_hand <- c("KD", "9D", "JS", "10H", "QC")
-
+hand_eval <- function(hand) {
+  
+  if(royal(hand)) {
+    return("Royal Flush")
+  } else if(straight_flush(hand)) {
+    return("Straight Flush")
+  } else if(four_kind(hand)) {
+    return("Four of a Kind")
+  } else if(full_house(hand)) {
+    return("Full House")
+  } else if(flush_hand(hand)) {
+    return("Flush")
+  } else if(straight(hand)) {
+    return("Straight")
+  } else if(three_kind(hand)) {
+    return("Three of a Kind")
+  } else if(two_pair(hand)) {
+    return("Two Pair")
+  } else if(jacks_better(hand)) {
+    return("Jacks or Better")
+  } else {
+    return("Nothing")
+  }
+  
+}

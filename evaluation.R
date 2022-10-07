@@ -72,6 +72,18 @@ royal <- function(hand) {
 }
 
 
+#### Evaluate for a Straight Flush ####
+straight_flush <- function(hand) {
+  
+  if(flush_hand(hand) == TRUE & straight(hand) == TRUE) {
+    return(TRUE)
+  } else {
+    return(FALSE)
+  }
+  
+}
+
+
 #### Evaluate for a Four of a Kind - Deprecated ####
 # four_kind <- function(hand) {
 #   
@@ -358,7 +370,7 @@ one_pair <- function(hand) {
 #### Evaluate for Jacks or Better ####
 jacks_better <- function(hand) {
   
-  is_one_pair <- one_pair(hand) # probably not necessary if run 2nd
+  is_one_pair <- one_pair(hand) # probably not necessary if ran 2nd
   
   if(is_one_pair == FALSE) {
     return(FALSE)
