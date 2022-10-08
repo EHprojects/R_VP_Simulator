@@ -16,6 +16,8 @@
 # K = 13
 # A = 14
 
+options("scipen" = 10) # increase number of displayed digits in dataframe
+options(pillar.sigfig = 6) # increase sig figs in tibbles
 
 test_hand <- c("10D", "JD", "QD", "KD", "AD")
 
@@ -31,14 +33,27 @@ testing_func <- function() {
   
 }
 
-system.time(results <- replicate(n = 1000000, testing_func()))
+system.time(results <- replicate(n = 2000000, testing_func()))
 table(results)
 
-for (i in 1:10) {
-  
-  deck <- create_deck()
-  hand <- deal_hand(deck)
-  print(hand)
-  print(hand_eval(hand))
-  
-}
+saveRDS(results, file = "rslts_one_mil_deal.RDS")
+
+rslts_table <- table(results)
+rslts <- as.data.frame(rslts_table)
+
+rslts <- rslts %>%
+    arrange(Freq)
+
+rslts %>%
+  mutate(prob = Freq / 2000000) %>%
+  mutate(pct = prob * 100) %>%
+  mutate(cum_pct = cumsum(pct))
+
+
+
+suits <- c("D", "C", "H", "S")
+ranks <- c("A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K")
+deck <- expand.grid(rank = ranks, suit = suits)
+deck <- paste0(deck$rank, deck$suit)
+deck <- sample(deck, replace = TRUE)
+deck[-(1:5)]

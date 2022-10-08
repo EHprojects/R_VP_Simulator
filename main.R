@@ -22,6 +22,7 @@ deal_hand <- function(deck) {
 }
 
 hand <- deal_hand(deck)
+deck <- deck[-(1:5)]
 
 hand_eval <- function(hand) {
   
