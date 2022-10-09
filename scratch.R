@@ -36,7 +36,7 @@ testing_func <- function() {
 system.time(results <- replicate(n = 2000000, testing_func()))
 table(results)
 
-saveRDS(results, file = "rslts_one_mil_deal.RDS")
+saveRDS(results, file = "rslts_two_mil_deal.RDS")
 
 rslts_table <- table(results)
 rslts <- as.data.frame(rslts_table)
@@ -57,3 +57,26 @@ deck <- expand.grid(rank = ranks, suit = suits)
 deck <- paste0(deck$rank, deck$suit)
 deck <- sample(deck, replace = TRUE)
 deck[-(1:5)]
+
+
+
+tst_input <- readline(prompt="Enter input: ")
+
+hold_input <- function(hand) {
+  
+  print_hand(hand)
+  cat("\n")
+  
+  cards_held_in <- readline(prompt="Enter cards to hold: ")
+  
+  cards_held_out <- rep(NA, length(cards_held_in))
+  
+  print(cards_held_out)
+  
+  return(cards_held)
+  
+}
+
+hold_input(hand)
+
+tst_vect <- as.vector("1,3,5")

@@ -12,7 +12,6 @@ create_deck <- function() {
   
 }
 
-deck <- create_deck()
 
 deal_hand <- function(deck) {
   
@@ -21,8 +20,6 @@ deal_hand <- function(deck) {
   return(hand)
 }
 
-hand <- deal_hand(deck)
-deck <- deck[-(1:5)]
 
 hand_eval <- function(hand) {
   
@@ -49,3 +46,19 @@ hand_eval <- function(hand) {
   }
   
 }
+
+
+deck <- create_deck()
+hand <- deal_hand(deck)
+deck <- deck[-(1:5)]
+
+print_hand <- function(hand) {
+  
+  print("Current hand:")
+  print(hand)
+  
+}
+
+print_hand(hand)
+
+
