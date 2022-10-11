@@ -62,3 +62,39 @@ print_hand <- function(hand) {
 print_hand(hand)
 
 
+hold_input <- function(hand) {
+  
+  print_hand(hand)
+  cat("\n")
+  
+  cards_held <- readline(prompt="Enter cards to hold: ")
+  cards_held <- strsplit(cards_held, "")[[1]]
+  cards_held <- as.numeric(cards_held)
+  
+  return(cards_held)
+  
+}
+
+hold_input(hand)
+
+
+hold_cards <- function(hand, cards_held) {
+  
+  discard_cards <- c(1, 2, 3, 4, 5)
+  
+  # tst_disc[!discard_cards %in% cards_held]
+  discard_cards <- setdiff(discard_cards, cards_held)
+  
+  print(discard_cards)
+  
+  for (i in discard_cards) {
+    
+    hand[i] <- "--"
+    
+  }
+  
+  return(hand)
+  
+}
+
+hold_cards(test_hand, tst_hold)
