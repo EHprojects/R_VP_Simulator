@@ -124,8 +124,6 @@ four_kind <- function(hand) {
   
 }
 
-four_kind(test_hand)
-
 
 #### Evaluate for a Full House ####
 full_house <- function(hand) {

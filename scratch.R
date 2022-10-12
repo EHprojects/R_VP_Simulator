@@ -21,8 +21,6 @@ options(pillar.sigfig = 6) # increase sig figs in tibbles
 
 test_hand <- c("10D", "4S", "QD", "7C", "AD")
 
-hand_eval(test_hand)
-
 
 testing_func <- function() {
   
@@ -48,12 +46,3 @@ rslts %>%
   mutate(prob = Freq / 2000000) %>%
   mutate(pct = prob * 100) %>%
   mutate(cum_pct = cumsum(pct))
-
-
-
-
-tst_hold <- c(1,3,5)
-tst_disc <- c(1, 2, 3, 4, 5)
-
-tst_disc[!tst_disc %in% tst_hold]
-setdiff(tst_disc, tst_hold)
