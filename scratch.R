@@ -6,6 +6,9 @@
 # one pair      = 7   # [1] 1 1 1 2 2
 # nothing       = 5   # [1] 1 1 1 1 1
 
+# match_suits Output (sorted):
+# flush         = 25  # [1] 5 5 5 5 5
+
 # JoB Hand Ranks:
 # Royal Flush > Straight Flush > Four of a Kind > Full House > Flush >
 # Straight > Three of a Kind > Two Pair > Jacks or Better
@@ -15,6 +18,8 @@
 # Q = 12
 # K = 13
 # A = 14
+
+# To Do: Abstract out rank matching
 
 options("scipen" = 10) # increase number of displayed digits in dataframe
 options(pillar.sigfig = 6) # increase sig figs in tibbles
@@ -46,3 +51,5 @@ rslts %>%
   mutate(prob = Freq / 2000000) %>%
   mutate(pct = prob * 100) %>%
   mutate(cum_pct = cumsum(pct))
+
+
