@@ -15,6 +15,8 @@
 # 15. One high card
 # 16. Discard everything
 
+
+
 four_kind_hold <- function(hand) {
   
   ranks <- get_ranks(hand)
@@ -43,28 +45,34 @@ four_kind_hold <- function(hand) {
   
 }
 
-tst_hand <- c("2S", "5D", "2H", "2C", "2D")
 
-four_kind_hold(tst_hand)
-
-
+# Check for a Straight Flush and return appropriate hold cards if true
 straight_flush_hold <- function(hand) {
   
-  cards_held <- c(1, 2, 3, 4, 5)
-  return(cards_held)
+  if(straight_flush(hand)) {
+    cards_held <- c(1, 2, 3, 4, 5)
+    return(cards_held)
+  } else {
+    return(FALSE)
+  }
   
 }
 
 
+# Check for Royal Flush and return appropriate hold cards if true
 royal_hold <- function(hand) {
   
-  cards_held <- c(1, 2, 3, 4, 5)
-  return(cards_held)
+  if(royal_flush(hand)) {
+    cards_held <- c(1, 2, 3, 4, 5)
+    return(cards_held)
+  } else {
+    return(FALSE)
+  }
   
 }
 
 
-# Test for a 4 to a Royal Flush and return the appropriate hold cards if found
+# Test for a 4 to a Royal Flush and return the appropriate hold cards if true
 # else return FALSE
 four_to_royal <- function(hand) {
   

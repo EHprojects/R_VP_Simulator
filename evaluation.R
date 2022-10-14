@@ -57,7 +57,7 @@ assign_rank_vals <- function(hand) {
 
 
 #### Evaluate for a Royal Flush ####
-royal <- function(hand) {
+royal_flush <- function(hand) {
   
   rank_vals <- as.numeric(assign_rank_vals(hand))
   
