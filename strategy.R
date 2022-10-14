@@ -64,104 +64,28 @@ royal_hold <- function(hand) {
 }
 
 
+# Test for a 4 to a Royal Flush and return the appropriate hold cards if found
+# else return FALSE
 four_to_royal <- function(hand) {
   
-  # four to "royal straight"
+  # Create a matrix of possible royal flush hands
+  suits <- c("D", "C", "H", "S")
+  royal_ranks <- c("10", "J", "Q", "K", "A")
+  royal_flushes <- expand.grid(rank = royal_ranks, suit = suits)
+  royal_flushes <- paste0(royal_flushes$rank, royal_flushes$suit)
+  royal_flushes <- matrix(royal_flushes, nrow = 5, ncol = 4)
   
-  # Face Card Ranks:
-  # J = 11
-  # Q = 12
-  # K = 13
-  # A = 14
-  
-  
-  
-  rank_vals <- as.numeric(assign_rank_vals(hand))
-  print(rank_vals)
-  royal_ranks <- c(10, 11, 12, 13, 14)
-  
-  # j <- 0
-  # 
-  # for(i in rank_vals) {
-  #   
-  #   print(paste0("i: ", i))
-  #   print(paste0("j: ", j))
-  #   
-  #   if(i %in% royal_ranks) {
-  #     
-  #     royal_ranks <- royal_ranks[ !royal_ranks == i ]
-  #     j <- j + 1
-  #     
-  #   }
-  #   
-  # }
-  # 
-  # print(j)
-  # 
-  
-  suits <- get_suits(hand)
-  print(suits)
-  
-  suit_match <- rep(NA, length(suits))
-  
+  # Check to see if 4 of the hand cards are in a possible royal flush hand
   for (i in 1:length(suits)) {
-    
-    suit_match[i] <- sum(suits == suits[i])
-    
-  }
-  
-  print(suit_match)
-  
-  print(sum(suit_match))
-  
-  # cards that match in suit and in "royal straight"
-  # Given that it is not a Royal Flush, then:
-  # if all cards are the same suit, one will not be in the "royal straight"
-  # if all cards are in the royal straight, one must be a different suit
-  
-  cards_in_royal <- NULL
-  
-  # If all suits are the same (i.e. a flush)
-  if(sum(suit_match) == 25) {
-    
-    for (i in 1:length(rank_vals)) {
-      
-      if(rank_vals[i] %in% royal_ranks) {
-        
-        cards_in_royal <- c(cards_in_royal, i)
-        
-      }
-      
+    # Return the 4 cards to the royal if found
+    if(sum(hand %in% royal_flushes[ , i]) == 4) {
+      cards_held <- which(hand %in% royal_flushes[ , i])
+      return(cards_held)
     }
-    
-    if(cards_in_royal == 4) {
-      return(cards_in_royal)
-    } else {
-      return(FALSE)
-    }
-    
   }
-  
-  print(cards_in_royal)
-  
- 
-  
+  return(FALSE) # False is returned by default
 }
 
 four_to_royal(tst_cards)
 
-tst_cards <- c("10S", "2S", "AS", "QS", "KS")
-
-tst_cmbn <- combn(tst_hand, 4)
-tst_cmbn[ , 1]
-
-royal_ranks <- c(10, 11, 12, 13, 14)
-tst_hand <- c(10, 10, 11, 12, 13)
-
-tst_hand %in% royal_ranks
-tst_hand == royal_ranks
-
-setdiff(royal_ranks, tst_hand)
-length(setdiff(royal_ranks, tst_hand))
-
-royal_ranks[ !royal_ranks == tst_card  ]
+tst_cards <- c("10H", "JC", "AS", "QS", "KS")
