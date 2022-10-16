@@ -1,6 +1,6 @@
 # To Do:  Change length assignment at beginning of functions (i.e. rep)
 #         Modify appropriate functions to use match_ranks func?
-#         Change assign_rank_vals to return numeric vector
+#         Clean up as.numeric(rank_vals) statements
 
 
 #### Return the card ranks ####
@@ -50,6 +50,8 @@ assign_rank_vals <- function(hand) {
     }
     
   }
+  
+  vals <- as.numeric(vals)
   
   return(vals)
   

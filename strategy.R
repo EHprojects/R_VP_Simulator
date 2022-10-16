@@ -17,32 +17,24 @@
 
 
 
+# Check for a four of kind and return the appropriate hold cards if true
 four_kind_hold <- function(hand) {
   
-  ranks <- get_ranks(hand)
-  # print(ranks)
-  
-  rank_match <- rep(NA, length(ranks))
-  
-  for (i in 1:length(ranks)) {
-    rank_match[i] <- sum(ranks == ranks[i])
-  }
-  
-  # print(rank_match)
-  
-  cards_held <- NULL
-  j <- 1
-  
-  for (i in 1:length(rank_match)) {
-    if(rank_match[i] == 4) {
-      cards_held[j] <- i
-      j <- j + 1
+  if(four_kind(hand)) {
+    
+    ranks <- get_ranks(hand)
+    rank_match <- rep(NA, length(ranks))
+    
+    for (i in 1:length(ranks)) {
+      rank_match[i] <- sum(ranks == ranks[i])
     }
+    
+    cards_held <- which(rank_match == 4)
+    return(cards_held)
+    
+  } else {
+    return(FALSE)
   }
-  
-  # print(cards_held)
-  return(cards_held)
-  
 }
 
 
@@ -85,7 +77,7 @@ four_to_royal <- function(hand) {
   
   # Check to see if 4 of the hand cards are in a possible royal flush hand
   for (i in 1:length(suits)) {
-    # Return the 4 cards to the royal if found
+    # Return the card positions for 4 to a royal if found
     if(sum(hand %in% royal_flushes[ , i]) == 4) {
       cards_held <- which(hand %in% royal_flushes[ , i])
       return(cards_held)
@@ -94,6 +86,93 @@ four_to_royal <- function(hand) {
   return(FALSE) # False is returned by default
 }
 
-four_to_royal(tst_cards)
 
-tst_cards <- c("10H", "JC", "AS", "QS", "KS")
+
+four_strght_flush <- function(hand) {
+  
+  # Runs after flush check, i.e. cannot be a flush
+  # This function relies on not being passed a flush hand - needs updating
+  
+  ranks <- assign_rank_vals(hand)
+  suits <- get_suits(hand)
+  # print(ranks)
+  # print(suits)
+  
+  max_num <- max(table(suits))
+  # max_num: 5 = flush
+  # max_num: 4 = 4 to a flush
+  max_suit <- names(which.max(table(suits)))
+  
+  # print(max_num)
+  # print(max_suit)
+  
+  four_flush <- FALSE
+  
+  # If there is not four to a flush, return false, else continue
+  if(max_num >= 4) {
+    four_flush <- TRUE
+  } else {
+    return(FALSE)
+  }
+  
+  flush_card_pos <- which(suits == max_suit)
+  # print(flush_card_pos)
+  
+  flush_cards <- hand[flush_card_pos]
+  # print(flush_cards)
+  
+  flush_ranks <- assign_rank_vals(flush_cards)
+  # print(flush_ranks)
+  
+  ace_hand <- FALSE
+  if(14 %in% flush_ranks) { ace_hand <- TRUE }
+  
+  if(ace_hand != TRUE) {
+    
+    strt_gaps <- length((setdiff(min(flush_ranks):max(flush_ranks), flush_ranks)))
+    # strt_gaps: 0 = straight
+    # strt_gaps: 1 = 4 to a straight
+    # print(strt_gaps)
+    
+    if(strt_gaps <= 1) {
+      return(flush_card_pos)
+    } else {
+      return(FALSE)
+    }
+    
+  }
+  
+  if(ace_hand == TRUE) {
+    
+    ace_high <- FALSE
+    ace_low <- FALSE
+    
+    strt_gaps <- length((setdiff(min(flush_ranks):max(flush_ranks), flush_ranks)))
+    # strt_gaps: 0 = straight
+    # strt_gaps: 1 = 4 to a straight
+    # print(strt_gaps)
+    
+    if(strt_gaps <= 1) {
+      ace_high <- TRUE # return here instead?
+    }
+    
+    flush_ranks <- replace(flush_ranks, flush_ranks == 14, 1)
+    
+    strt_gaps <- length((setdiff(min(flush_ranks):max(flush_ranks), flush_ranks)))
+    # strt_gaps: 0 = straight
+    # strt_gaps: 1 = 4 to a straight
+    # print(strt_gaps)
+    
+    if(strt_gaps <= 1) {
+      ace_low <- TRUE # return here instead?
+    }
+    
+    if(ace_high | ace_low) {
+      return(flush_card_pos)
+    } else {
+      return(FALSE)
+    }
+    
+  }
+  
+}
