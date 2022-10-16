@@ -52,9 +52,13 @@ rslts %>%
   mutate(cum_pct = cumsum(pct))
 
 
+three_kind_hold <- function(hand) {
+  
+  
+  
+}
 
 
-four_strght_flush(tst_hand)
 
 tst_hand <- c("3H", "2H", "4H", "QS", "7H") # 1 gap
 

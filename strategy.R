@@ -16,6 +16,10 @@
 # 16. Discard everything
 
 
+# To Do:  Clean up four_strght_flush()
+#         
+#         
+
 
 # Check for a four of kind and return the appropriate hold cards if true
 four_kind_hold <- function(hand) {
@@ -86,6 +90,41 @@ four_to_royal <- function(hand) {
   return(FALSE) # False is returned by default
 }
 
+
+straight_hold <- function(hand) {
+  
+  if(straight(hand)) {
+    cards_held <- c(1, 2, 3, 4, 5)
+    return(cards_held)
+  } else {
+    return(FALSE)
+  }
+  
+}
+
+
+full_house_hold <- function(hand) {
+  
+  if(full_house(hand)) {
+    cards_held <- c(1, 2, 3, 4, 5)
+    return(cards_held)
+  } else {
+    return(FALSE)
+  }
+  
+}
+
+
+flush_hold <- function(hand) {
+  
+  if(flush_hand(hand)) {
+    cards_held <- c(1, 2, 3, 4, 5)
+    return(cards_held)
+  } else {
+    return(FALSE)
+  }
+  
+}
 
 
 four_strght_flush <- function(hand) {

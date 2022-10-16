@@ -1,6 +1,7 @@
 # To Do:  Change length assignment at beginning of functions (i.e. rep)
 #         Modify appropriate functions to use match_ranks func?
 #         Clean up as.numeric(rank_vals) statements
+#         Update flush_hand & straight functions to use new code from four_strght_flush
 
 
 #### Return the card ranks ####
