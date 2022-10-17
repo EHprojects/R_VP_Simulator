@@ -52,18 +52,43 @@ rslts %>%
   mutate(cum_pct = cumsum(pct))
 
 
-three_kind_hold <- function(hand) {
+
+three_strght_flush_hold <- function(hand) {
+  
+  rank_vect <- NULL
+  
+  for (i in 1:14) {
+    rank_vect <- c(rank_vect, i:(i + 4))
+  }
+  
+  rank_matrix <- matrix(rank_vect, nrow = 5, ncol = 14)
+  
+  
   
   
   
 }
+  
 
 
 
-tst_hand <- c("3H", "2H", "4H", "QS", "7H") # 1 gap
 
-tst_suit_match <- c(4, 4, 1, 4, 4)
-tst_suits <- c("H", "H", "C", "H", "H")
-tst_ranks <- c(10,  9,  4,  7,  8)
+two_suited_hold(tst_hand)
 
-combn(tst_ranks, 4)
+
+tst_hand <- c("KH", "JH", "3C", "10S", "QD")
+
+tst_ranks <- c(3, 4, 5, 14, 7)
+tst_rank_match <- c(1, 1, 2, 2, 1)
+
+
+
+rank_vect <- NULL
+
+for (i in 1:14) {
+  rank_vect <- c(rank_vect, i:(i + 4))
+}
+
+rank_matrix <- matrix(rank_vect, nrow = 5, ncol = 14)
+
+
