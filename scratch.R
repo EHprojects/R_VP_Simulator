@@ -52,36 +52,14 @@ rslts %>%
   mutate(cum_pct = cumsum(pct))
 
 
-two_unsuited_hold <- function(hand) {
-  
-  rank_vals <- assign_rank_vals(hand)
-  rank_vals_sort <- sort(rank_vals)
-  print(rank_vals_sort)
-  high_ranks <- 11:14
-  
-  high_cards <- which(rank_vals_sort %in% high_ranks)
-  hihg_rank_vals <- rank_vals_sort[high_cards]
-  
-  print(high_cards)
 
-}
 
 two_unsuited_hold(tst_hand)
 
 
-tst_hand <- c("3H", "4H", "KC", "QS", "AH")
+tst_hand <- c("AC", "4H", "KD", "QS", "JH")
 
-tst_ranks <- c(3, 4, 5, 14, 7)
-tst_rank_match <- c(1, 1, 2, 2, 1)
+tst_rank_vals <- c(14, 4, 2, 12, 11)
+high_ranks <- 11:14
 
-
-
-rank_vect <- NULL
-
-for (i in 1:10) {
-  rank_vect <- c(rank_vect, i:(i + 4))
-}
-
-rank_matrix <- matrix(rank_vect, nrow = 5, ncol = 10)
-
-
+which(tst_rank_vals %in% high_ranks)

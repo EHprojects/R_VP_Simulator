@@ -457,3 +457,27 @@ three_strght_flush_hold <- function(hand) {
 
 }
 
+
+two_unsuited_hold <- function(hand) {
+  
+  # Hold lowest two unsuited high cards
+  
+  rank_vals <- assign_rank_vals(hand)
+  
+  high_rank_vals <- rank_vals[which(rank_vals >= 11)]
+  
+  if(length(high_rank_vals >= 2)) {
+    
+    hold_vals <- sort(high_rank_vals)[1:2]
+    
+    cards_held <- which(rank_vals == hold_vals[1])
+    cards_held <- c(cards_held, which(rank_vals == hold_vals[2]))
+    cards_held <- sort(cards_held)
+    
+    return(cards_held)
+    
+  } else {
+    return(FALSE)
+  }
+  
+}
