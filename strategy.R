@@ -386,7 +386,7 @@ two_suited_hold <- function(hand) {
   royal_flushes <- matrix(royal_flushes, nrow = 5, ncol = 4)
   
   # Check to see if 4 of the hand cards are in a possible royal flush hand
-  for (i in 1:length(hand)) {
+  for (i in 1:ncol(rank_matrix)) {
     # Return the card positions for 4 to a royal if found
     if(sum(hand %in% royal_flushes[ , i]) == 2) {
       cards_held <- which(hand %in% royal_flushes[ , i])
@@ -399,3 +399,61 @@ two_suited_hold <- function(hand) {
   # high_cards <- 11:14
   
 }
+
+
+three_strght_flush_hold <- function(hand) {
+  
+  rank_vals <- assign_rank_vals(hand)
+  suits <- get_suits(hand)
+  
+  max_num <- max(table(suits))
+  # max_num: 5 = flush
+  # max_num: 4 = 4 to a flush
+  # max_num: 3 = 3 to a flush
+  max_suit <- names(which.max(table(suits)))
+  
+  flush_card_pos <- which(suits == max_suit)
+  flush_cards <- hand[flush_card_pos]
+  flush_ranks <- assign_rank_vals(flush_cards)
+  
+  # If there is not 3 to a flush, return false
+  if(max_num != 3) {
+    return(FALSE)
+  }
+  
+  ace_hand <- FALSE
+  if(14 %in% flush_ranks) { ace_hand <- TRUE }
+  
+  rank_vect <- NULL
+  
+  for (i in 1:10) {
+    rank_vect <- c(rank_vect, i:(i + 4))
+  }
+  
+  rank_matrix <- matrix(rank_vect, nrow = 5, ncol = 10)
+  
+  ace_high <- FALSE
+  ace_low <- FALSE
+  
+  for (i in 1:ncol(rank_matrix)) {
+    # Return the card positions for 3 to a straight if found
+    if(sum(flush_ranks %in% rank_matrix[ , i]) == 3) {
+      cards_held <- flush_card_pos
+      return(cards_held)
+    }
+  }
+  
+  flush_ranks <- replace(flush_ranks, flush_ranks == 14, 1)
+  
+  for (i in 1:ncol(rank_matrix)) {
+    # Return the card positions for 3 to a straight if found
+    if(sum(flush_ranks %in% rank_matrix[ , i]) == 3) {
+      cards_held <- flush_card_pos
+      return(cards_held)
+    }
+  }
+  
+  return(FALSE) # False is returned by default
+
+}
+
