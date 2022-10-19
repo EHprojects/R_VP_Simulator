@@ -481,3 +481,25 @@ two_unsuited_hold <- function(hand) {
   }
   
 }
+
+
+ten_high_suited <- function(hand) {
+  #Suited 10/J, 10/Q, or 10/K
+  
+  rank_vals <- assign_rank_vals(hand)
+  suits <- get_suits(hand)
+  
+  tens_cards <- which(rank_vals == 10)
+  high_cards <- which(rank_vals %in% 11:13)
+  
+  ten_suit <- get_suits(hand[tens_cards])
+  high_suit <- get_suits(hand[high_cards])
+  
+  if(ten_suit == high_suit) {
+    cards_held <- c(tens_cards, high_cards)
+    return(cards_held)
+  } else {
+    return(FALSE)
+  }
+  
+}
