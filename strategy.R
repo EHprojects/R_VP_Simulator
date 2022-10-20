@@ -91,6 +91,7 @@ four_to_royal_hold <- function(hand) {
 }
 
 
+# Test for a straight and return the appropriate hold cards if true
 straight_hold <- function(hand) {
   
   if(straight(hand)) {
@@ -103,6 +104,7 @@ straight_hold <- function(hand) {
 }
 
 
+# Test for a Full House and return the appropriate hold cards if true
 full_house_hold <- function(hand) {
   
   if(full_house(hand)) {
@@ -386,7 +388,7 @@ two_suited_hold <- function(hand) {
   royal_flushes <- matrix(royal_flushes, nrow = 5, ncol = 4)
   
   # Check to see if 4 of the hand cards are in a possible royal flush hand
-  for (i in 1:ncol(rank_matrix)) {
+  for (i in 1:ncol(royal_flushes)) {
     # Return the card positions for 4 to a royal if found
     if(sum(hand %in% royal_flushes[ , i]) == 2) {
       cards_held <- which(hand %in% royal_flushes[ , i])
@@ -495,8 +497,28 @@ ten_high_suited <- function(hand) {
   ten_suit <- get_suits(hand[tens_cards])
   high_suit <- get_suits(hand[high_cards])
   
+  if(is.na(ten_suit) | is.na(high_suit)) {
+    return(FALSE)
+  }
+  
   if(ten_suit == high_suit) {
     cards_held <- c(tens_cards, high_cards)
+    return(cards_held)
+  } else {
+    return(FALSE)
+  }
+  
+}
+
+
+one_high_card <- function(hand) {
+  # One high card
+  
+  rank_vals <- assign_rank_vals(hand)
+  
+  cards_held <- which(rank_vals %in% 11:14)
+  
+  if(length(cards_held) > 0) {
     return(cards_held)
   } else {
     return(FALSE)

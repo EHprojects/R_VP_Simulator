@@ -38,7 +38,7 @@ update_deck <- function(deck, hand) {
 # Evaluate the hand for a winning / losing condition
 hand_eval <- function(hand) {
   
-  if(royal(hand)) {
+  if(royal_flush(hand)) {
     return("Royal Flush")
   } else if(straight_flush(hand)) {
     return("Straight Flush")
@@ -68,6 +68,56 @@ print_hand <- function(hand) {
   
   print("Current hand:")
   print(hand)
+  
+}
+
+
+# Play Strategy
+job_simple <- function(hand) {
+  
+  if(!FALSE %in% royal_hold(hand)) {
+    return(royal_hold(hand))
+  } else if(!FALSE %in% straight_flush_hold(hand)) {
+    return(straight_flush_hold(hand))
+  } else if(!FALSE %in% four_kind_hold(hand)) {
+    return(four_kind_hold(hand))
+  } else if(!FALSE %in% four_to_royal_hold(hand)) {
+    return(four_to_royal_hold(hand))
+  } else if(!FALSE %in% full_house_hold(hand)) {
+    return(full_house_hold(hand))
+  } else if(!FALSE %in% flush_hold(hand)) {
+    return(flush_hold(hand))
+  } else if(!FALSE %in% straight_hold(hand)) {
+    return(straight_hold(hand))
+  } else if(!FALSE %in% three_kind_hold(hand)) {
+    return(three_kind_hold(hand))
+  } else if(!FALSE %in% four_strght_flush_hold(hand)) {
+    return(four_strght_flush_hold(hand))
+  } else if(!FALSE %in% two_pair_hold(hand)) {
+    return(two_pair_hold(hand))
+  } else if(!FALSE %in% high_pair_hold(hand)) {
+    return(high_pair_hold(hand))
+  } else if(!FALSE %in% three_to_royal_hold(hand)) {
+    return(three_to_royal_hold(hand))
+  } else if(!FALSE %in% four_to_flush_hold(hand)) {
+    return(four_to_flush_hold(hand))
+  } else if(!FALSE %in% low_pair_hold(hand)) {
+    return(low_pair_hold(hand))
+  } else if(!FALSE %in% four_out_strght_hold(hand)) {
+    return(four_out_strght_hold(hand))
+  } else if(!FALSE %in% two_suited_hold(hand)) {
+    return(two_suited_hold(hand))
+  } else if(!FALSE %in% three_strght_flush_hold(hand)) {
+    return(three_strght_flush_hold(hand))
+  } else if(!FALSE %in% two_unsuited_hold(hand)) {
+    return(two_unsuited_hold(hand))
+  } else if(!FALSE %in% ten_high_suited(hand)) {
+    return(ten_high_suited(hand))
+  } else if(!FALSE %in% one_high_card(hand)) {
+    return(one_high_card(hand))
+  } else {
+    return(NULL)
+  }
   
 }
 
@@ -144,4 +194,42 @@ play_hand <- function() {
   
 }
 
-# play_hand()
+
+play_hand_auto <- function(show_output = FALSE) {
+  
+  deck <- create_deck()
+  hand <- deal_hand(deck, 5)
+  deck <- update_deck(deck, hand)
+  
+  if(show_output) {
+    print_hand(hand)
+  }
+  
+  held <- job_simple(hand)
+  
+  if(show_output) {
+    cat("\n")
+    cat("Cards Held:", held, "\n")
+  }
+  
+  hand <- hold_cards(hand, held)
+  hand <- draw_cards(deck, hand)
+  
+  if(show_output) {
+    cat("\n")
+    print_hand(hand)
+  }
+  
+  deck <- update_deck(deck, hand)
+  
+  if(show_output) {
+    cat("\n")
+  }
+  result <- hand_eval(hand)
+  #print(result)
+  
+  return(result)
+  
+}
+
+# play_hand_auto(TRUE)
