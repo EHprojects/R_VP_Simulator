@@ -178,6 +178,33 @@ draw_cards <- function(deck, hand) {
 }
 
 
+full_pay_table <- function(bet, result) {
+  
+  if(result == "Royal Flush") {
+    return(bet * 800)
+  } else if(result == "Straight Flush") {
+    return(bet * 50)
+  } else if(result == "Four of a Kind") {
+    return(bet * 25)
+  } else if(result == "Full House") {
+    return(bet * 9)
+  } else if(result == "Flush") {
+    return(bet * 6)
+  } else if(result == "Straight") {
+    return(bet * 4)
+  } else if(result == "Three of a Kind") {
+    return(bet * 3)
+  } else if(result == "Two Pair") {
+    return(bet * 2)
+  } else if(result == "Jacks or Better") {
+    return(bet * 1)
+  } else if(result == "Nothing") {
+    return(bet * 0)
+  }
+  
+}
+
+
 #### Control Logic ####
 play_hand <- function() {
   
