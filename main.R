@@ -260,3 +260,32 @@ play_hand_auto <- function(show_output = FALSE) {
 }
 
 # play_hand_auto(TRUE)
+
+
+auto_play_stats <- function()  {
+  
+  deck <- create_deck()
+  hand <- deal_hand(deck, 5)
+  dealt_hand <- hand
+  deck <- update_deck(deck, hand)
+  
+  held <- job_simple(hand)
+  cards_held <- held
+  
+  hand <- hold_cards(hand, held)
+  held_hand <- hand
+  hand <- draw_cards(deck, hand)
+  draw_hand <- hand
+  
+  deck <- update_deck(deck, hand)
+
+  result <- hand_eval(hand)
+
+  # return(result)
+  
+  hand_stats <- list(dealt_hand, cards_held, held_hand, draw_hand, result)
+  
+  return(hand_stats)
+  
+  
+}

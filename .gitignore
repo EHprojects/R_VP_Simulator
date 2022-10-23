@@ -9,3 +9,6 @@ scratch.R
 job_simple_probs.csv
 job_simple_probs.txt
 rslts_100k_simple.RDS
+validation.R
+poker-hand-training-true.data
+poker-hand.names
