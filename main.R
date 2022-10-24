@@ -122,6 +122,56 @@ job_simple <- function(hand) {
 }
 
 
+# Play Strategy
+job_simple_stats <- function(hand) {
+  
+  if(!FALSE %in% royal_hold(hand)) {
+    return(list(royal_hold(hand), "Royal Hold"))
+  } else if(!FALSE %in% straight_flush_hold(hand)) {
+    return(list(straight_flush_hold(hand), "Straight Flush Hold"))
+  } else if(!FALSE %in% four_kind_hold(hand)) {
+    return(list(four_kind_hold(hand), "Four Kind Hold"))
+  } else if(!FALSE %in% four_to_royal_hold(hand)) {
+    return(list(four_to_royal_hold(hand), "Four to Royal Hold"))
+  } else if(!FALSE %in% full_house_hold(hand)) {
+    return(list(full_house_hold(hand), "Full House Hold"))
+  } else if(!FALSE %in% flush_hold(hand)) {
+    return(list(flush_hold(hand), "Flush Hold"))
+  } else if(!FALSE %in% straight_hold(hand)) {
+    return(list(straight_hold(hand), "Straight Hold"))
+  } else if(!FALSE %in% three_kind_hold(hand)) {
+    return(list(three_kind_hold(hand), "Three Kind Hold"))
+  } else if(!FALSE %in% four_strght_flush_hold(hand)) {
+    return(list(four_strght_flush_hold(hand), "Four Straight Flush Hold"))
+  } else if(!FALSE %in% two_pair_hold(hand)) {
+    return(list(two_pair_hold(hand), "Two Pair Hold"))
+  } else if(!FALSE %in% high_pair_hold(hand)) {
+    return(list(high_pair_hold(hand), "High Pair Hold"))
+  } else if(!FALSE %in% three_to_royal_hold(hand)) {
+    return(list(three_to_royal_hold(hand), "Three to Royal Hold"))
+  } else if(!FALSE %in% four_to_flush_hold(hand)) {
+    return(list(four_to_flush_hold(hand), "Four to Flush Hold"))
+  } else if(!FALSE %in% low_pair_hold(hand)) {
+    return(list(low_pair_hold(hand), "Low Pair Hold"))
+  } else if(!FALSE %in% four_out_strght_hold(hand)) {
+    return(list(four_out_strght_hold(hand), "Four Outside Straight Hold"))
+  } else if(!FALSE %in% two_suited_hold(hand)) {
+    return(list(two_suited_hold(hand), "Two Suited Hold"))
+  } else if(!FALSE %in% three_strght_flush_hold(hand)) {
+    return(list(three_strght_flush_hold(hand), "Three Straight Flush Hold"))
+  } else if(!FALSE %in% two_unsuited_hold(hand)) {
+    return(list(two_unsuited_hold(hand), "Two Unsuited Hold"))
+  } else if(!FALSE %in% ten_high_suited(hand)) {
+    return(list(ten_high_suited(hand), "Ten High Suited Hold"))
+  } else if(!FALSE %in% one_high_card(hand)) {
+    return(list(one_high_card(hand), "One High Card Hold"))
+  } else {
+    return(NULL)
+  }
+  
+}
+
+
 # Prompts the user for cards to be held
 hold_input <- function(hand) {
   
@@ -261,18 +311,23 @@ play_hand_auto <- function(show_output = FALSE) {
 
 # play_hand_auto(TRUE)
 
+bank_roll <- 1000
 
-auto_play_stats <- function()  {
+auto_play_stats <- function(bet)  {
+  
+  bank_roll <<- bank_roll - bet
   
   deck <- create_deck()
   hand <- deal_hand(deck, 5)
   dealt_hand <- hand
   deck <- update_deck(deck, hand)
   
-  held <- job_simple(hand)
-  cards_held <- held
+  held <- job_simple_stats(hand)
+  held_cards <- held[[1]]
+  strat_match <- held[[2]]
+  # cards_held <- held
   
-  hand <- hold_cards(hand, held)
+  hand <- hold_cards(hand, held_cards)
   held_hand <- hand
   hand <- draw_cards(deck, hand)
   draw_hand <- hand
@@ -280,10 +335,15 @@ auto_play_stats <- function()  {
   deck <- update_deck(deck, hand)
 
   result <- hand_eval(hand)
+  
+  win_loss <- full_pay_table(bet = bet, result = result)
+
+  bank_roll <<- bank_roll + win_loss
 
   # return(result)
   
-  hand_stats <- list(dealt_hand, cards_held, held_hand, draw_hand, result)
+  hand_stats <- list(dealt_hand, strat_match,
+                     held_cards, held_hand, draw_hand, result, bank_roll)
   
   return(hand_stats)
   
